@@ -7,7 +7,7 @@ try {
     $featchTeacher->execute();
     $teacherData = $featchTeacher->fetchall();
 } catch (\Throwable $th) {
-    //throw $th;
+    throw $th;
 }
 ?>
 <?php
@@ -23,23 +23,19 @@ try {
         }
     }
 } catch (\Throwable $th) {
-    // echo $th;
-    //throw $th;
+    throw $th;
 }
 ?>
 <?php
 try {
     if (isset($_POST['search'])) {
-        // echo "search called";
         $name = $_POST['searchData'];
-        // echo $name;
         $featchTeacher = $connection->prepare("Select * from user where type = 'teacher' and fname= '" . $name . "'");
         $featchTeacher->execute();
         $teacherData = $featchTeacher->fetchall();
     }
 } catch (\Throwable $th) {
-    // echo $th;
-    //throw $th;
+    throw $th;
 }
 ?>
 <!doctype html>
@@ -166,11 +162,11 @@ try {
                                         </tbody>
                                     </table>
                                 </div>
-                                <?PHP 
+                                <?PHP
                                 include_once('./blank-result.php');
                                 noResult($teacherData);
                                 ?>
-                              
+
                             </div>
                         </div>
 
@@ -203,21 +199,17 @@ try {
 </div>
 <script>
     function editButton(e) {
-        console.log("Edit button clicked", e);
         document.cookie = "editTeacher = " + e;
         location.replace("/lecture-scheduler/edit-teacher.php");
     }
 
     function deleteButton(rollNo) {
-        console.log("Delete button clicked", rollNo);
         document.cookie = "deleteTeacher = " + rollNo;
     }
 </script>
 <script>
-    // Get the modal
     var modal = document.getElementById('id01');
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

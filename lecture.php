@@ -9,10 +9,8 @@ try {
         $courseData = $fetchCourse->fetchall();
     }
 } catch (\Throwable $th) {
-    echo $th;
     throw $th;
 }
-
 ?>
 <?php
 try {
@@ -22,7 +20,6 @@ try {
 } catch (\Throwable $th) {
     throw $th;
 }
-
 ?>
 <?PHP
 $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semester 5', 'semester 6', 'semester 7', 'semester 8',];
@@ -41,7 +38,6 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
     <meta name="msapplication-tap-highlight" content="no">
     <link href="./main.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <?php
@@ -120,12 +116,6 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
     <script type="text/javascript">
-        //  alert("Hello I am running");
-        // $("department1").keypress(function() {
-        //     alert("Hello I am running");
-        // });
-        // console.log(document.getElementById("department1").value);
-
         function checkDepartment() {
             var res = document.getElementById("department").value;
         }

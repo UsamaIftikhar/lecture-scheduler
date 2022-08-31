@@ -7,7 +7,7 @@ try {
     $fetchStudents->execute();
     $studentsData = $fetchStudents->fetchall();
 } catch (\Throwable $th) {
-    //throw $th;
+    throw $th;
 }
 ?>
 <?php
@@ -23,23 +23,19 @@ try {
         }
     }
 } catch (\Throwable $th) {
-    // echo $th;
-    //throw $th;
+    throw $th;
 }
 ?>
 <?php
 try {
     if (isset($_POST['search'])) {
-        // echo "search called";
         $rollno = $_POST['searchData'];
-        // echo $rollno;
         $fetchStudents = $connection->prepare("Select * from user where type = 'student' and rollno=$rollno");
         $fetchStudents->execute();
         $studentsData = $fetchStudents->fetchall();
     }
 } catch (\Throwable $th) {
-    // echo $th;
-    //throw $th;
+    throw $th;
 }
 ?>
 <!doctype html>

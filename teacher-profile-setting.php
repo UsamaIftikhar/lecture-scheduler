@@ -21,86 +21,72 @@ try {
 
         header("Refresh:0");
 ?>
-      
+
 <?PHP
 
     }
 } catch (\Throwable $th) {
-
     setcookie('toast', 'error');
-
-    echo $th;
     throw $th;
 }
 ?>
-  <?php
-        if (isset($_POST['profile'])) {
-            echo "Profile Submit called";
-            echo $_FILES['image'];
-            if (isset($_FILES['image'])) {
-                echo "avatar is here";
-                $errors = array();
-                $file_name = $_FILES['image']['name'];
-                $file_size = $_FILES['image']['size'];
-                $file_tmp = $_FILES['image']['tmp_name'];
-                $file_type = $_FILES['image']['type'];
-                $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+<?php
+if (isset($_POST['profile'])) {
+    if (isset($_FILES['image'])) {
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+        $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
 
-                $extensions = array("jpeg", "jpg", "png");
+        $extensions = array("jpeg", "jpg", "png");
 
-                if (in_array($file_ext, $extensions) === false) {
-                    $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
-                }
-
-                if ($file_size > 7097152) {
-                    $errors[] = 'File size must be less tha 5 MB';
-                }
-
-                if (empty($errors) == true) {
-                    move_uploaded_file($file_tmp, "images/" . $file_name);
-                    echo "images/$file_name";
-                    echo "Success";
-                    try {
-                        $update = $connection->prepare("UPDATE user SET image='" . "images/" . $file_name . "' WHERE email='" . $userData['email'] . "'");
-                        $update->execute();
-
-                        if ($update) {
-                            echo "in if statement";
-                            $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
-                            $fetchUser->execute();
-                            $data = $fetchUser->fetch();
-                            $_SESSION['userData'] = $data;
-                        }
-                    } catch (\Throwable $th) {
-                        echo $th;
-                        throw $th;
-                    }
-                } else {
-                    print_r($errors);
-                }
-            }
+        if (in_array($file_ext, $extensions) === false) {
+            $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
         }
 
-        if (isset($_POST['remove-profile'])) {
-            echo "Remove Button called";
+        if ($file_size > 7097152) {
+            $errors[] = 'File size must be less tha 5 MB';
+        }
 
+        if (empty($errors) == true) {
+            move_uploaded_file($file_tmp, "images/" . $file_name);
             try {
-                $update = $connection->prepare("UPDATE user SET image='' WHERE email='" . $userData['email'] . "'");
+                $update = $connection->prepare("UPDATE user SET image='" . "images/" . $file_name . "' WHERE email='" . $userData['email'] . "'");
                 $update->execute();
 
                 if ($update) {
-                    echo "in if statement";
                     $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
                     $fetchUser->execute();
                     $data = $fetchUser->fetch();
                     $_SESSION['userData'] = $data;
                 }
             } catch (\Throwable $th) {
-                echo $th;
                 throw $th;
             }
+        } else {
+            print_r($errors);
         }
-        ?>
+    }
+}
+
+if (isset($_POST['remove-profile'])) {
+    try {
+        $update = $connection->prepare("UPDATE user SET image='' WHERE email='" . $userData['email'] . "'");
+        $update->execute();
+
+        if ($update) {
+            $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
+            $fetchUser->execute();
+            $data = $fetchUser->fetch();
+            $_SESSION['userData'] = $data;
+        }
+    } catch (\Throwable $th) {
+        throw $th;
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -112,7 +98,6 @@ try {
     <title>Teacher-Profile Setting</title>
     <link href="assets1/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets1/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <!-- <link href="assets1/css/style.bundle.css" rel="stylesheet" type="text/css" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="Build whatever layout you need with our Architect framework.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -151,8 +136,6 @@ try {
                         </div>
                     </div>
 
-
-
                     <div class="tab-pane">
                         <div class="main-card mb-3 card">
                             <div class="card-body">
@@ -173,10 +156,7 @@ try {
                                         }
                                     }
                                 } catch (\Throwable $th) {
-
                                     setcookie('toast', 'error');
-
-                                    echo $th;
                                     throw $th;
                                 }
                                 ?>

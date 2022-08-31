@@ -9,7 +9,6 @@ try {
         $courseData = $fetchCourse->fetchall();
     }
 } catch (\Throwable $th) {
-    echo $th;
     throw $th;
 }
 ?>
@@ -120,8 +119,6 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
 
     <script type="text/javascript">
         function checkDepartment() {
-            console.log("Deparement is selected")
-            console.log(document.getElementById("department").value);
             var res = document.getElementById("department").value;
         }
     </script>

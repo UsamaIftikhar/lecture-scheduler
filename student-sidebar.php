@@ -91,7 +91,6 @@ function Sidebar($currentPage)
                         </a>
                     </li>
 
-
                     <li>
                         <a href="./logout.php">
                             <i class="metismenu-icon pe-7s-graph2">

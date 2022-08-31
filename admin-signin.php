@@ -22,7 +22,6 @@ try {
         }
     }
 } catch (Exception $e) {
-    echo $e;
     ?>
     <div class="alert alert-danger fade show" role="alert">Something went wrong. Kindly try again</div>
 <?PHP

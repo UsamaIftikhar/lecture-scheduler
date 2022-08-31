@@ -5,10 +5,7 @@ $userData = $_SESSION['userData'];
 ?>
 <?php
 if (isset($_POST['profile'])) {
-    echo "Profile Submit called";
-    echo $_FILES['image'];
     if (isset($_FILES['image'])) {
-        echo "avatar is here";
         $errors = array();
         $file_name = $_FILES['image']['name'];
         $file_size = $_FILES['image']['size'];
@@ -28,21 +25,17 @@ if (isset($_POST['profile'])) {
 
         if (empty($errors) == true) {
             move_uploaded_file($file_tmp, "images/" . $file_name);
-            echo "images/$file_name";
-            echo "Success";
             try {
                 $update = $connection->prepare("UPDATE user SET image='" . "images/" . $file_name . "' WHERE email='" . $userData['email'] . "'");
                 $update->execute();
 
                 if ($update) {
-                    echo "in if statement";
                     $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
                     $fetchUser->execute();
                     $data = $fetchUser->fetch();
                     $_SESSION['userData'] = $data;
                 }
             } catch (\Throwable $th) {
-                echo $th;
                 throw $th;
             }
         } else {
@@ -52,21 +45,17 @@ if (isset($_POST['profile'])) {
 }
 
 if (isset($_POST['remove-profile'])) {
-    echo "Remove Button called";
-
     try {
         $update = $connection->prepare("UPDATE user SET image='' WHERE email='" . $userData['email'] . "'");
         $update->execute();
 
         if ($update) {
-            echo "in if statement";
             $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
             $fetchUser->execute();
             $data = $fetchUser->fetch();
             $_SESSION['userData'] = $data;
         }
     } catch (\Throwable $th) {
-        echo $th;
         throw $th;
     }
 }
@@ -87,7 +76,6 @@ try {
     }
 } catch (\Throwable $th) {
     setcookie('toast', 'error');
-    echo $th;
     throw $th;
 }
 ?>
@@ -167,50 +155,32 @@ try {
                                 ?>
                                 <div>
                                     <div class="row mb-6">
-                                        <!--begin::Label-->
                                         <label class="col-lg-2 col-form-label fw-bold fs-6">Profile Picture</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
                                         <div class="col-lg-8">
-                                            <!--begin::Image input-->
                                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/images/avatars/profile-pic.jpg')">
-                                                <!--begin::Preview existing avatar-->
                                                 <div class="image-input-wrapper w-125px h-125px" style="background-image: url(<?PHP
                                                                                                                                 if ($userData['image']) {
                                                                                                                                     echo $userData['image'];
                                                                                                                                 } else {
                                                                                                                                 ?> assets/images/avatars/profile-pic.jpg <?PHP } ?>)"></div>
-                                                <!--end::Preview existing avatar-->
-                                                <!--begin::Label-->
                                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                     <i class="bi bi-pencil-fill fs-7"></i>
-                                                    <!--begin::Inputs-->
                                                     <form action="" method="POST" enctype="multipart/form-data">
                                                         <input type="file" name="image" onchange="uploadPicture()" />
                                                         <input type="hidden" name="avatar_remove" />
                                                         <button hidden type="profile" name="profile" id="profile">Click Me</button>
                                                         <button hidden type="remove-profile" name="remove-profile" id="remove-profile">Click Me</button>
                                                     </form>
-                                                    <!--end::Inputs-->
                                                 </label>
-                                                <!--end::Label-->
-                                                <!--begin::Cancel-->
                                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                                     <i class="bi bi-x fs-2"></i>
                                                 </span>
-                                                <!--end::Cancel-->
-                                                <!--begin::Remove-->
                                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar" <?PHP if (!$userData['image']) { ?> hidden <?PHP } ?>>
                                                     <i class="bi bi-x fs-2" onclick="removePicture()"></i>
                                                 </span>
-                                                <!--end::Remove-->
                                             </div>
-                                            <!--end::Image input-->
-                                            <!--begin::Hint-->
                                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                                            <!--end::Hint-->
                                         </div>
-                                        <!--end::Col-->
                                     </div>
                                 </div>
                                 <form class="needs-validation" novalidate action="admin-profile-setting.php" method="POST">
@@ -273,18 +243,13 @@ try {
     }
 
     function removePicture() {
-        console.log("Button pressed");
         var profileButton = document.getElementById('remove-profile').click();
     }
 </script>
 <script type="text/javascript" src="./assets/scripts/main.js"></script>
 <script src="assets1/plugins/global/plugins.bundle.js"></script>
 <script src="assets1/js/scripts.bundle.js"></script>
-<!--end::Global Javascript Bundle-->
-<!--begin::Page Vendors Javascript(used by this page)-->
 <script src="assets1/plugins/custom/datatables/datatables.bundle.js"></script>
-<!--end::Page Vendors Javascript-->
-<!--begin::Page Custom Javascript(used by this page)-->
 <script src="assets1/js/custom/account/settings/signin-methods.js"></script>
 <script src="assets1/js/custom/account/settings/profile-details.js"></script>
 <script src="assets1/js/custom/account/settings/deactivate-account.js"></script>

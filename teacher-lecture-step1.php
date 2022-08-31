@@ -52,8 +52,7 @@ try {
             <?php
             $currentPage = basename($_SERVER['REQUEST_URI']);
             require_once('./student-sidebar.php');
-            Sidebar(explode("?",$currentPage)[0]);
-            // echo explode("?",$currentPage)[0];
+            Sidebar(explode("?", $currentPage)[0]);
             ?>
             <div class="app-main__outer">
                 <div class="app-main__inner">
@@ -121,7 +120,6 @@ try {
                                         }
                                     }
                                 } catch (Exception $e) {
-                                    // echo $e;
                                     include_once('./reset-filters.php');
                                     ?>
                                     <div class="alert alert-danger fade show" role="alert">There were an error while submitting the form. Kindly try again</div>
@@ -180,7 +178,7 @@ try {
                                                     $fname = $row['fname'];
                                                     $lname = $row['lname'];
                                                 ?>
-                                                    <option value=<?PHP echo "'$fname $lname'" ?>><?PHP echo $fname. ' ' .$lname ?></option>
+                                                    <option value=<?PHP echo "'$fname $lname'" ?>><?PHP echo $fname . ' ' . $lname ?></option>
                                                 <?PHP
                                                 }
                                                 ?>

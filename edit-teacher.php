@@ -10,7 +10,6 @@ try {
         $userValues = $fetchUser->fetch();
     }
 } catch (\Throwable $th) {
-    // echo $th;
     throw $th;
 }
 ?>
@@ -23,10 +22,7 @@ try {
         header("Refresh:0");
     }
 } catch (\Throwable $th) {
-
     setcookie('toast', 'error');
-
-    echo $th;
     throw $th;
 }
 ?>
@@ -85,7 +81,6 @@ try {
                                 <div class="card-header">Teacher Details
                                     <div class="btn-actions-pane-right">
                                         <div role="group" class="btn-group-sm btn-group">
-
                                         </div>
                                     </div>
                                 </div>
@@ -106,8 +101,7 @@ try {
                                             }
                                         }
                                     } catch (\Throwable $th) {
-                                        echo $th;
-                                        //throw $th;
+                                        throw $th;
                                     }
                                     ?>
                                     <form class="needs-validation" novalidate action="edit-teacher.php" method="POST">
@@ -123,8 +117,6 @@ try {
                                         <div class="position-relative row form-group"><label for="validationTooltip02" class="col-sm-2 col-form-label">Password</label>
                                             <div class="col-sm-10"><input name="password" id="validationTooltip02" required autocomplete="nope" placeholder="Add new password and save" type="text" class="form-control"></div>
                                         </div>
-
-
                                         <div class="position-relative row form-check">
                                             <div class="d-flex justify-content-end" style="margin-right: 14px;">
                                                 <button id="submit" type="submit" name="submit" class="btn btn-secondary">Save</button>
@@ -133,14 +125,7 @@ try {
                                     </form>
                                 </div>
                             </div>
-
-                            <!-- <button class="modelButton" onclick="document.getElementById('id01').style.display='block'">Open Modal</button> -->
-
-
-
-
                         </div>
-
                     </div>
                 </div>
             </div>

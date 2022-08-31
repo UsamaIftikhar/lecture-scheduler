@@ -14,7 +14,6 @@ try {
         $lecturesData = $fetchLectures->fetchall();
     }
 } catch (\Throwable $th) {
-    // echo $th;
     throw $th;
 }
 ?>
@@ -188,12 +187,9 @@ try {
                                 <div class="card-header">All Lectures of date <?PHP echo $date ?>
                                     <div class="btn-actions-pane-right">
                                         <div role="group" class="btn-group-sm btn-group">
-                                            <!-- <button class="active btn btn-focus">Last Week</button>
-                                                <button class="btn btn-focus">All Month</button> -->
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="tableWrapper"> -->
                                 <div class="table-responsive pb-2">
                                     <table id="dtHorizontalExample" class="align-middle mb-0 table table-striped table-borderless table-striped table-hover scroll" cellspacing="0" width="100%">
                                         <thead>
@@ -221,7 +217,6 @@ try {
                                                 $startTime = $row['startTime'];
                                                 $endTime = $row['endTime'];
                                                 $teacher = $row['teacher'];
-                                                // echo $course;
                                             ?>
                                                 <tr id="tablerow">
                                                     <td class="text-left pl-4 text-muted" id="course">#<?PHP echo $course ?></td>
@@ -274,11 +269,10 @@ try {
                                         </tbody>
                                     </table>
                                 </div>
-                                <?PHP 
+                                <?PHP
                                 include_once('./blank-result.php');
                                 noResult($lecturesData);
                                 ?>
-                                <!-- </div> -->
                                 <div class="d-block text-center card-footer">
                                 </div>
                             </div>
@@ -299,7 +293,6 @@ try {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!-- <div>Are you sure to delete this student?</div> -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <form action="admin-dashboard.php" style="margin-bottom: 0px;" method="POST">
@@ -318,13 +311,11 @@ try {
     });
 
     function editButton(e) {
-        console.log("Edit button clicked", e);
         document.cookie = "editLectureAdmin = " + e;
         location.replace("/lecture-scheduler/edit-lecture-admin.php");
     }
 
     function deleteButton(id) {
-        console.log("Delete button clicked", id);
         document.cookie = "deleteLectureAdmin = " + id;
     }
 </script>

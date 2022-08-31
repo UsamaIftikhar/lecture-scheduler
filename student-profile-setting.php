@@ -5,10 +5,7 @@ $userData = $_SESSION['userData'];
 ?>
 <?php
 if (isset($_POST['profile'])) {
-    echo "Profile Submit called";
-    echo $_FILES['image'];
     if (isset($_FILES['image'])) {
-        echo "avatar is here";
         $errors = array();
         $file_name = $_FILES['image']['name'];
         $file_size = $_FILES['image']['size'];
@@ -28,21 +25,17 @@ if (isset($_POST['profile'])) {
 
         if (empty($errors) == true) {
             move_uploaded_file($file_tmp, "images/" . $file_name);
-            echo "images/$file_name";
-            echo "Success";
             try {
                 $update = $connection->prepare("UPDATE user SET image='" . "images/" . $file_name . "' WHERE email='" . $userData['email'] . "'");
                 $update->execute();
 
                 if ($update) {
-                    echo "in if statement";
                     $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
                     $fetchUser->execute();
                     $data = $fetchUser->fetch();
                     $_SESSION['userData'] = $data;
                 }
             } catch (\Throwable $th) {
-                echo $th;
                 throw $th;
             }
         } else {
@@ -52,21 +45,17 @@ if (isset($_POST['profile'])) {
 }
 
 if (isset($_POST['remove-profile'])) {
-    echo "Remove Button called";
-
     try {
         $update = $connection->prepare("UPDATE user SET image='' WHERE email='" . $userData['email'] . "'");
         $update->execute();
 
         if ($update) {
-            echo "in if statement";
             $fetchUser = $connection->prepare("Select * from user WHERE email='" . $userData['email'] . "'");
             $fetchUser->execute();
             $data = $fetchUser->fetch();
             $_SESSION['userData'] = $data;
         }
     } catch (\Throwable $th) {
-        echo $th;
         throw $th;
     }
 }
@@ -95,10 +84,7 @@ try {
         header("Refresh:0");
     }
 } catch (\Throwable $th) {
-
     setcookie('toast', 'error');
-
-    echo $th;
     throw $th;
 } ?>
 <!doctype html>
@@ -117,11 +103,6 @@ try {
     <meta name="msapplication-tap-highlight" content="no">
     <link href="./main.css" rel="stylesheet">
     <link href="./new-style.css" rel="stylesheet">
-
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" /> -->
-    <!--end::Fonts-->
-    <!--begin::Page Vendor Stylesheets(used by this page)-->
-
 </head>
 <style>
     .btn {
@@ -179,10 +160,7 @@ try {
                                         }
                                     }
                                 } catch (\Throwable $th) {
-
                                     setcookie('toast', 'error');
-
-                                    echo $th;
                                     throw $th;
                                 }
                                 ?>
@@ -235,14 +213,7 @@ try {
                                     </div>
                                 </div>
                                 <form class="needs-validation" novalidate action="student-profile-setting.php" method="POST">
-                                    <!-- <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Profile Picture</label>
-                                        <div class="col-sm-10">
-                                            <div class="avatar">
-                                            <img height="125px" width="125px" style="border-radius: 0.75rem; background-repeat: no-repeat; background-size: cover; border: 3px solid #fff;" src="<?php echo $userData['image']; ?>"> </img>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    -->
+                          
                                     <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">First Name</label>
                                         <div class="col-sm-10"><input name="fname" id="fname" value="<?PHP echo $userData['fname'] ?>" type="text" class="form-control"></div>
                                     </div>

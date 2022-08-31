@@ -5,19 +5,19 @@ $userData = $_SESSION['userData'];
 ?>
 <?PHP
 if (isset($_COOKIE['dep'])) {
-    echo  $dep = $_COOKIE['dep'];
+    $dep = $_COOKIE['dep'];
 }
 if (isset($_COOKIE['sem'])) {
-    echo  $sem = $_COOKIE['sem'];
+    $sem = $_COOKIE['sem'];
 }
 if (isset($_COOKIE['date'])) {
-    echo  $selectedDate = $_COOKIE['date'];
+    $selectedDate = $_COOKIE['date'];
 }
 if (isset($_COOKIE['course'])) {
-    echo  $selectedCourse = $_COOKIE['course'];
+    $selectedCourse = $_COOKIE['course'];
 }
 if (isset($_COOKIE['teacher'])) {
-    echo  $selectedTeacher = $_COOKIE['teacher'];
+    $selectedTeacher = $_COOKIE['teacher'];
 }
 ?>
 <?php
@@ -34,7 +34,6 @@ try {
     $fetchCourse = $connection->prepare("Select * from courses where department='" . $dep . "' and semester='" . $sem . "'");
     $fetchCourse->execute();
     $courseData = $fetchCourse->fetchall();
-    // echo '<pre>'; print_r($courseData); echo '</pre>';
 } catch (\Throwable $th) {
     throw $th;
 }
@@ -44,7 +43,6 @@ try {
     $fetchDepartments = $connection->prepare("Select * from departments");
     $fetchDepartments->execute();
     $departmentData = $fetchDepartments->fetchall();
-    // echo '<pre>'; print_r($departmentData); echo '</pre>';
 } catch (\Throwable $th) {
     throw $th;
 }
@@ -61,7 +59,6 @@ try {
         $teacher = $_POST['teacher'];
         $query = "SELECT * FROM lectures";
         $conditions = array();
-        // echo $teacher;
         if (!empty($course)) {
             $conditions[] = "course='$course'";
         }
@@ -85,17 +82,14 @@ try {
         $lectureData = $fetchLecture->fetchall();
     }
 } catch (\Throwable $th) {
-    // echo $th;
     throw $th;
 }
 ?>
 <?php
 try {
     if (isset($_POST['reset'])) {
-        echo "Reset called";
     }
 } catch (\Throwable $th) {
-    echo $th;
     throw $th;
 }
 ?>
@@ -112,7 +106,6 @@ try {
         }
     }
 } catch (\Throwable $th) {
-    // echo $th;
     throw $th;
 }
 ?>
@@ -174,7 +167,7 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
                                         <?PHP
                                         foreach ($departmentData as $row) {
                                             $dname = $row['dname'];
-                                            echo $dname;
+                                            // echo $dname;
                                             if ($dname == $dep) {
                                                 echo ('<option selected="selected" value=' . "'$dname'" . '>' . $dname . '</option>');
                                             } else {
@@ -205,53 +198,51 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
                         </div>
                     </div>
                     <div class="d-flex">
-                    <div class="row col-lg-6">
-                        <div class="form-group col-lg-6" style="padding-left: 0px;">
-                            <label for="input_from">Select Course (Optional)</label>
-                            <form class="needs-validation" novalidate action="teacher-dashboard.php" method="POST">
-                                <select name="course" id="course" class="form-control form-select form-select-sm" onchange="courseUpdate()">
+                        <div class="row col-lg-6">
+                            <div class="form-group col-lg-6" style="padding-left: 0px;">
+                                <label for="input_from">Select Course (Optional)</label>
+                                <form class="needs-validation" novalidate action="teacher-dashboard.php" method="POST">
+                                    <select name="course" id="course" class="form-control form-select form-select-sm" onchange="courseUpdate()">
+                                        <option selected disabled>Select</option>
+                                        <?PHP
+                                        foreach ($courseData as $row) {
+                                            $dname = $row['course_name'];
+                                            // echo $dname;
+                                            if ($dname == $selectedCourse) {
+                                                echo ('<option selected="selected" value=' . "'$dname'" . '>' . $dname . '</option>');
+                                            } else {
+                                                echo ('<option value=' . "'$dname'" . '>' . $dname . '</option>');
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+
+                            </div>
+                        </div>
+                        <div class="row col-lg-6">
+                            <div class="form-group col-lg-6" style="padding-left: 0px;">
+                                <label for="input_from">Select Teacher (Optional)</label>
+                                <select name="teacher" id="teacher" class="form-control form-select form-select-sm" onchange="teacherUpdate()">
                                     <option selected disabled>Select</option>
                                     <?PHP
-                                    foreach ($courseData as $row) {
-                                        $dname = $row['course_name'];
-                                        echo $dname;
-                                        if ($dname == $selectedCourse) {
-                                            echo ('<option selected="selected" value=' . "'$dname'" . '>' . $dname . '</option>');
+
+                                    foreach ($teachersData as $row) {
+                                        $fname = $row['fname'];
+                                        $lname = $row['lname'];
+                                        $teacherName = $fname . ' ' . $lname;
+                                    ?>
+
+                                    <?PHP
+                                        if ($teacherName == $selectedTeacher) {
+                                            echo ('<option selected="selected" value=' . $selectedTeacher . '>'  . $selectedTeacher . '</option>');
                                         } else {
-                                            echo ('<option value=' . "'$dname'" . '>' . $dname . '</option>');
+                                            echo ('<option value=' . "'$teacherName'" . '>' . $teacherName . '</option>');
                                         }
                                     }
                                     ?>
                                 </select>
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="row col-lg-6">
-                        <div class="form-group col-lg-6" style="padding-left: 0px;">
-                            <label for="input_from">Select Teacher (Optional)</label>
-                            <select name="teacher" id="teacher" class="form-control form-select form-select-sm" onchange="teacherUpdate()">
-                                <option selected disabled>Select</option>
-                                <?PHP
-                                
-                                foreach ($teachersData as $row) {
-                                    $fname = $row['fname'];
-                                    $lname = $row['lname'];
-                                    $teacherName = $fname.' '.$lname;
-                                ?>
-                                
-                                    <!-- <option value=<?PHP echo "'$fname $lname'" ?>><?PHP echo $fname . ' ' . $lname ?></option> -->
-                                <?PHP
-                                 if ($teacherName == $selectedTeacher) {
-                                    echo ('<option selected="selected" value=' .$selectedTeacher. '>'  .$selectedTeacher. '</option>');
-                                } else {
-                                    echo ('<option value=' ."'$teacherName'". '>' . $teacherName . '</option>');
-                                    // echo ('<option value=' ."'$fname $lname'". '>' . $fname . ' ' . $lname . '</option>');
-                                }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
                     </div>
                     <div class="form-group">
                         <label for="input_from">Select Date (Optional)</label>
@@ -421,25 +412,21 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
 </div>
 <script>
     function editButton(e) {
-        console.log("Edit button clicked", e);
         document.cookie = "editLecture = " + e;
         location.replace("/lecture-scheduler/edit-lecture.php");
     }
 
     function deleteButton(id) {
-        console.log("Delete button clicked", id);
         document.cookie = "deleteLecture = " + id;
     }
 </script>
 <script type="text/javascript">
     function update() {
-        console.log("Function called")
         var selectedDepartment = document.getElementById('department');
         var selectedSemester = document.getElementById('semester');
         var option = selectedDepartment.options[selectedDepartment.selectedIndex];
         var option1 = selectedSemester.options[selectedSemester.selectedIndex];
 
-        console.log(option.value);
         document.cookie = "dep = " + option.value;
         document.cookie = "sem = " + option1.value;
         location.reload();
@@ -463,6 +450,7 @@ $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semest
 
         document.cookie = "teacher = " + option.value;
     }
+
     function clearFilters() {
         document.cookie = "dep = " + '';
         document.cookie = "sem = " + '';

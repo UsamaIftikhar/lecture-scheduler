@@ -203,5 +203,4 @@ try {
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 </body>
 <script type="text/javascript" src="./assets/scripts/main.js"></script>
-
 <html>

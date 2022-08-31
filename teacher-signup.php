@@ -149,7 +149,7 @@ try {
                                             <?PHP
                                             foreach ($departmentsData as $row) {
                                                 $dname = $row['dname'];
-                                                echo $dname;
+                                                // echo $dname;
                                             ?>
                                                 <option value=<?PHP echo "'$dname'" ?>><?PHP echo $dname ?></option>
                                             <?PHP

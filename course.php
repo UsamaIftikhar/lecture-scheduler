@@ -29,6 +29,7 @@ try {
         }
     }
 } catch (Exception $e) {
+    throw $e;
     setcookie('courseSaved', 'error', time() + 2);
 }
 try {
@@ -37,7 +38,7 @@ try {
     $departmentsData = $fetchDepartments->fetchall();
     $departmentname = $departmentsData['dname'];
 } catch (\Throwable $th) {
-    //throw $th;
+    throw $th;
 }
 $semesterData = ['semester 1', 'semester 2', 'semester 3', 'semester 4', 'semester 5', 'semester 6', 'semester 7', 'semester 8',];
 ?>

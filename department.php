@@ -39,7 +39,7 @@ try {
     $departmentname=$departmentsData['dname'];
 
 } catch (\Throwable $th) {
-    //throw $th;
+    throw $th;
 }
 ?>
 <!doctype html>

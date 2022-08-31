@@ -120,7 +120,6 @@ try {
                                         }
                                     }
                                 } catch (Exception $e) {
-                                    // echo $e;
                                     ?>
                                     <div class="alert alert-danger fade show" role="alert">There were an error while submitting the form. Kindly try again</div>
 
@@ -200,5 +199,4 @@ try {
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 </body>
 <script type="text/javascript" src="./assets/scripts/main.js"></script>
-
 <html>
