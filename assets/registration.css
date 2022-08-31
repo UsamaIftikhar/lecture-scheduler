@@ -1,0 +1,22 @@
+.bg-image {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: bottom;
+    overflow: auto;
+    /* height: 1000px !important; */
+}
+
+.heading {
+    margin-top: 100px;
+}
+
+.option-color {
+    color: #a1a5b7 !important;
+    font-weight: 600 !important
+}
+
+
+.text-body{
+    color: white !important;
+}
+
